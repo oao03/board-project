@@ -126,5 +126,22 @@ public class BoardController {
         return "redirect:/board/list";
     }
 
+    @GetMapping("/member/save")
+    public String saveForm() {
+        return "save";
+    }
+
+    @PostMapping("/member/save")
+    public String save(@RequestParam("memberEmail") String memberEmail,
+                       @RequestParam("memberPassword") String memberPassword,
+                       @RequestParam("memberName") String memberName) {
+
+        System.out.println("MemberController.save");
+        System.out.println("memberEmail = " + memberEmail);
+        System.out.println("memberPassword = " + memberPassword);
+        System.out.println("memberName = " + memberName);
+        return "index";
+    }
+
 
 }
