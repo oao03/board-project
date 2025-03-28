@@ -2,13 +2,78 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>login</title>
+    <title>로그인</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #81ecec, #74b9ff);
+            margin: 0;
+            padding: 0;
+        }
+
+        .login-container {
+            max-width: 400px;
+            margin: 100px auto;
+            padding: 40px;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        h2 {
+            text-align: center;
+            color: #2d3436;
+            margin-bottom: 30px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #2d3436;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #b2bec3;
+            border-radius: 6px;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            width: 100%;
+            background-color: #0984e3;
+            color: white;
+            border: none;
+            padding: 12px;
+            font-size: 16px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #74b9ff;
+        }
+
+    </style>
 </head>
 <body>
-<form action="/member/login" method="post">
-    이메일 : <input type="text" name="memberEmail"> <br>
-    비밀번호 : <input type="password" name="memberPassword"> <br>
-    <input type="submit" value="로그인">
-</form>
+
+<div class="login-container">
+    <h2>로그인</h2>
+    <form action="/member/login" method="post">
+        <label for="email">이메일</label>
+        <input type="text" name="memberEmail" id="email" placeholder="이메일을 입력하세요" required>
+
+        <label for="password">비밀번호</label>
+        <input type="password" name="memberPassword" id="password" placeholder="비밀번호를 입력하세요" required>
+
+        <input type="submit" value="로그인">
+    </form>
+</div>
+
 </body>
 </html>

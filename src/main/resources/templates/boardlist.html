@@ -2,51 +2,158 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>게시글 리스트 페이지</title>
+    <title>게시글 리스트</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f6f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 30px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .welcome {
+            font-size: 18px;
+            margin-bottom: 20px;
+            font-weight: bold;
+            color: #2d3436;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        thead {
+            background-color: #0984e3;
+            color: white;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: center;
+            border-bottom: 1px solid #dfe6e9;
+        }
+
+        a {
+            color: #0984e3;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .pagination a,
+        .pagination strong {
+            margin: 0 5px;
+            text-decoration: none;
+            color: #2d3436;
+        }
+
+        .pagination strong {
+            color: #d63031;
+            font-weight: bold;
+        }
+
+        .search-box {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .search-box input {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #b2bec3;
+            border-radius: 5px;
+        }
+
+        .search-box button {
+            padding: 8px 14px;
+            border: none;
+            background-color: #0984e3;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .search-box button:hover {
+            background-color: #74b9ff;
+        }
+
+        /* 글 작성 버튼 */
+        .create-button {
+            background-color: #00b894;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        .create-button:hover {
+            background-color: #55efc4;
+        }
+    </style>
 </head>
-
-<style>
-
-  .layout{
-      width : 500px;
-      margin : 0 auto;
-      margin-top: 40px;
-  }
-
-</style>
-
-
 <body>
 
-    <div class="layout">
-        <p th:text="${session.loginEmail + '님 환영합니다!'}"></p>
-        <table>
-          <thead>
-              <tr>
-                  <th>글번호</th>
-                  <th>제목</th>
-              </tr>
-          </thead>
-          <tbody>
-              <tr th:each = "board : ${list}">
-                  <td th:text="${board.id}">1</td>
-                  <td>
-                    <a th:text="${board.title}" th:href="@{/board/view(id=${board.id})}"></a>
-                  </td>
-              </tr>
-          </tbody>
-        </table>
+<div class="container">
 
-        <th:bolck th:each="page : ${#numbers.sequence(startPage, endPage)}">
-            <a th:if="${page != nowPage}" th:href="@{/board/list(page = ${page - 1}, searchKeyword = ${param.searchKeyword})}" th:text="${page}"></a>
-            <strong th:if="${page == nowPage}" th:text="${page}" style="color : red"></strong>
-        </th:bolck>
-        <form th:action="@{/board/list}" method="get">
-            <input type="text" name="searchKeyword">
-            <button type="submit">검색</button>
-        </form>
+    <!-- 로그인 환영 메시지 -->
+    <div class="welcome" th:text="${session.loginName + '님 환영합니다!'}">로그인된 사용자님 환영합니다!</div>
 
+    <!-- 글 작성 버튼 -->
+    <a href="/board/write" class="create-button">글 작성</a>
+
+    <!-- 게시글 목록 테이블 -->
+    <table>
+        <thead>
+        <tr>
+            <th>글번호</th>
+            <th>제목</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="board : ${list}">
+            <td th:text="${board.id}">1</td>
+            <td>
+                <a th:text="${board.title}" th:href="@{/board/view(id=${board.id})}"></a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- 페이지네이션 -->
+    <div class="pagination">
+        <th:block th:each="page : ${#numbers.sequence(startPage, endPage)}">
+            <a th:if="${page != nowPage}"
+               th:href="@{/board/list(page=${page - 1}, searchKeyword=${param.searchKeyword})}"
+               th:text="${page}">1</a>
+            <strong th:if="${page == nowPage}" th:text="${page}">1</strong>
+        </th:block>
     </div>
+
+    <!-- 검색 폼 -->
+    <form th:action="@{/board/list}" method="get" class="search-box">
+        <input type="text" name="searchKeyword" placeholder="검색어를 입력하세요">
+        <button type="submit">검색</button>
+    </form>
+
+</div>
 
 </body>
 </html>

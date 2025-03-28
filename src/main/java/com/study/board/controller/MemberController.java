@@ -1,6 +1,5 @@
 package com.study.board.controller;
 
-
 import com.study.board.dto.MemberDTO;
 import com.study.board.service.MemberService;
 import jakarta.servlet.http.HttpSession;
@@ -35,13 +34,13 @@ public class MemberController {
     @PostMapping("/member/login")
     public String login(@ModelAttribute MemberDTO memberDTO, HttpSession session) {
         MemberDTO loginResult = memberService.login(memberDTO);
-        if(loginResult != null) {
-            //로그인 성공
-            session.setAttribute("loginEmail", loginResult.getMemberEmail());
+        if (loginResult != null) {
+            // 로그인 성공, 이름을 세션에 저장
+            //session.setAttribute("loginEmail", loginResult.getMemberEmail());
+            session.setAttribute("loginName", loginResult.getMemberName());  // 이름 추가
             return "redirect:/board/list";
-        }
-        else{
-            //로그인 실패
+        } else {
+            // 로그인 실패
             return "login";
         }
     }

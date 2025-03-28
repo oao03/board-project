@@ -2,17 +2,86 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>게시글 상세 페이지</title>
+    <title>게시글 상세 보기</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f6f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 60px auto;
+            padding: 30px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #2d3436;
+        }
+
+        .content {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #636e72;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        a.button {
+            display: inline-block;
+            padding: 10px 16px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+            color: white;
+            background-color: #0984e3;
+            transition: background-color 0.2s;
+        }
+
+        a.button:hover {
+            background-color: #74b9ff;
+        }
+
+        a.button.delete {
+            background-color: #d63031;
+        }
+
+        a.button.delete:hover {
+            background-color: #ff7675;
+        }
+
+    </style>
 </head>
 <body>
 
-<h1 th:text="${board.title}">제목입니다.</h1>
-<p th:text="${board.content}">내용이 들어갈 부분입니다.</p>
-<a th:href="@{/board/download/{fileName}(fileName=${board.fileName})}" download>
-    다운받기
-</a>
-<a th:href="@{/board/delete(id=${board.id})}">글삭제</a>
+<div class="container">
+    <!-- 제목 -->
+    <h1 th:text="${board.title}">제목입니다.</h1>
 
-<a th:href="@{/board/modify/{id}(id = ${board.id})}">수정</a>
+    <!-- 내용 -->
+    <div class="content" th:text="${board.content}">내용이 들어갈 부분입니다.</div>
+
+    <!-- 버튼 영역 -->
+    <div class="buttons">
+        <a class="button" th:href="@{/board/download/{fileName}(fileName=${board.fileName})}" download>파일 다운로드</a>
+        <a class="button delete" th:href="@{/board/delete(id=${board.id})}">글 삭제</a>
+        <a class="button" th:href="@{/board/modify/{id}(id=${board.id})}">수정하기</a>
+        <a class="button" th:href="@{/board/list}">목록으로</a>
+    </div>
+</div>
+
 </body>
 </html>

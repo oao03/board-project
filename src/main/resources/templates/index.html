@@ -2,11 +2,62 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>index</title>
+    <title>Spring 게시판</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #74b9ff, #81ecec);
+            color: #fff;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 100px auto;
+            padding: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 30px;
+            font-size: 28px;
+        }
+
+        a {
+            display: inline-block;
+            margin: 10px;
+            padding: 12px 24px;
+            text-decoration: none;
+            background-color: #fff;
+            color: #0984e3;
+            font-weight: bold;
+            border-radius: 6px;
+            transition: all 0.2s ease-in-out;
+        }
+
+        a:hover {
+            background-color: #dfe6e9;
+            color: #2d3436;
+        }
+
+    </style>
 </head>
 <body>
-    <h2>Hello Spring Boot!!</h2>
+
+<div class="container">
+    <h2>🌸 Spring Boot 게시판에 오신 걸 환영합니다 🌸</h2>
+
+    <!-- 이름을 세션에서 가져와 환영 메시지 출력 -->
+    <p th:text="${session.loginName + '님 환영합니다!'}">이름이 표시될 부분입니다.</p>
+
     <a href="/member/save">회원가입</a>
     <a href="/member/login">로그인</a>
+</div>
+
 </body>
 </html>
