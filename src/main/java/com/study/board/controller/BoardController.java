@@ -2,6 +2,7 @@ package com.study.board.controller;
 
 import com.study.board.entity.Board;
 import com.study.board.service.BoardService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,6 +23,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 @Controller
+@RequiredArgsConstructor
 public class BoardController {
 
     @Autowired
@@ -68,24 +70,24 @@ public class BoardController {
     }
 
     @GetMapping("/board/view") // localhost:8080/board/view?id=1
-    public String boardView(Model model, @RequestParam(name = "id") Integer id) {
+    public String boardView(Model model, @RequestParam(name = "id") Long id) {
 
-        model.addAttribute("board", boardService.boardView(id));
+        model.addAttribute("board", boardService.boardView(Math.toIntExact(id)));
         return "boardview";
     }
 
 
     @GetMapping("/board/modify/{id}")
-    public String boardModify(@PathVariable("id") Integer id, Model model) {
-        model.addAttribute("board", boardService.boardView(id));
+    public String boardModify(@PathVariable("id") Long id, Model model) {
+        model.addAttribute("board", boardService.boardView(Math.toIntExact(id)));
 
         return "boardmodify";
     }
 
     @PostMapping("/board/update/{id}")
-    public String boardUpdate(@PathVariable("id") Integer id, @ModelAttribute Board board, @RequestParam(value = "file", required = false) MultipartFile file) throws Exception{
+    public String boardUpdate(@PathVariable("id") Long id, @ModelAttribute Board board, @RequestParam(value = "file", required = false) MultipartFile file) throws Exception{
 
-        Board boardTemp = boardService.boardView(id);
+        Board boardTemp = boardService.boardView(Math.toIntExact(id));
         boardTemp.setTitle(board.getTitle());
         boardTemp.setContent(board.getContent());
 
@@ -126,22 +128,6 @@ public class BoardController {
         return "redirect:/board/list";
     }
 
-    @GetMapping("/member/save")
-    public String saveForm() {
-        return "save";
-    }
-
-    @PostMapping("/member/save")
-    public String save(@RequestParam("memberEmail") String memberEmail,
-                       @RequestParam("memberPassword") String memberPassword,
-                       @RequestParam("memberName") String memberName) {
-
-        System.out.println("MemberController.save");
-        System.out.println("memberEmail = " + memberEmail);
-        System.out.println("memberPassword = " + memberPassword);
-        System.out.println("memberName = " + memberName);
-        return "index";
-    }
 
 
 }

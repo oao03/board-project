@@ -1,5 +1,6 @@
 package com.study.board.service;
 
+import com.study.board.dto.MemberDTO;
 import com.study.board.entity.Board;
 import com.study.board.repository.BoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +13,16 @@ import java.io.File;
 import java.util.UUID;
 
 @Service
+
 public class BoardService {
 
-    @Autowired
-    private BoardRepository boardRepository;
+    private final BoardRepository boardRepository;
+
+    // 생성자 주입 (추천)
+    public BoardService(BoardRepository boardRepository) {
+        this.boardRepository = boardRepository;
+    }
+
 
     // 글 작성 처리
     public void write(Board board, MultipartFile file) throws Exception{
@@ -55,14 +62,15 @@ public class BoardService {
     //특정 게시글 불러오기
     public Board boardView(Integer id) {
 
-        return boardRepository.findById(id).get();
+        return boardRepository.findById(Long.valueOf(id)).get();
     }
 
     //특정 게시글 삭제
     public void boardDelete(Integer id) {
 
-        boardRepository.deleteById(id);
+        boardRepository.deleteById(Long.valueOf(id));
     }
+
 
 
 }
